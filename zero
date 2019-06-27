@@ -1,0 +1,31 @@
+rm(list = ls())
+library(zCompositions);
+setwd("C:/Users/...........")
+filename<-"cero_ilr2.csv";  
+data<-read.csv(file=filename, header=TRUE, sep = ";", dec = "."); 
+data0W<-data; dr<-data[1:15,6:9];#
+
+#########METHOD 1
+arcticLake=dr
+#data(arcticLake)
+x <- arcticLake
+## generate rounded zeros artificially:
+#x[x[,1] < 5, 1] <- 0
+#x[x[,2] < 44, 2] <- 0
+#xia <- impRZilr(x, maxit=10, dl=c(85,3.4,0.04,0.07), eps=0.05, method="lm")
+xia <- impRZilr(x, maxit=10, dl=c(85.235,3.47,0.04,0.07), eps=0.05, method="lm")
+#xia <- impRZilr(x, maxit=10, dl = rep(0.05,ncol(x)), eps=0.05, method="lm")
+xia$x
+#a=xia$x
+#b=xia$x
+C=xia$x
+
+#########METHOD 2
+#data(LPdata)
+
+dl=c(85.235,3.47,0.04,0.07)
+LPdata.imp=lrEM(x,label=0,dl=dl,rob = FALSE,tolerance = 0.001)
+C2=LPdata.imp
+
+LPdata.imp2=lrEM(x,label=0,dl=dl,rob = TRUE,tolerance = 0.001)
+C2R=LPdata.imp2
